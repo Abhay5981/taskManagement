@@ -5,7 +5,7 @@ import { CiViewBoard, CiLogout, CiSearch } from "react-icons/ci";
 import { IoIosArrowDown } from "react-icons/io";
 import { RiExpandUpDownFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 
 function Header() {
@@ -86,32 +86,17 @@ function Header() {
     />
     <button className="px-4 py-2 bg-[#7B1984] text-white rounded-full shadow-md hover:bg-green-600"
     
-    onClick={handleCreateTask}>
-    
+    >
+    <Link to="/createTask">
     ADD TASK
- 
+    </Link>
      
     </button>
   </div>
 </div>
  <hr />
 
- <div className="task-header flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md">
-  {[
-    { label: "Task Name" },
-    { 
-      label: "Due On", 
-      icon: <RiExpandUpDownFill className="text-xl text-gray-500" /> 
-    },
-    { label: "Task Status" },
-    { label: "Task Category" },
-  ].map((item, index) => (
-    <h2 key={index} className="text-lg font-semibold flex items-center space-x-2">
-      <span>{item.label}</span>
-      {item.icon && <span>{item.icon}</span>}
-    </h2>
-  ))}
-</div>
+
     </header>
    
   );

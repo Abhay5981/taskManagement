@@ -5,6 +5,8 @@ import { IoAdd } from "react-icons/io5";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { TbArrowBack } from "react-icons/tb";
+import { useSelector } from 'react-redux';
+import { RiExpandUpDownFill } from 'react-icons/ri';
 
 function AddTodo() {
 const [showTaskHeader, setShowTaskHeader] = useState(false)
@@ -22,10 +24,32 @@ const [showWorkStatus , setShowWorkStatus] = useState(false)
     const handleWorkStatus = ()=>{
         setShowWorkStatus(true)
     }
+
+
+    const tasks = useSelector((state)=>state.tasks.tasks);
+    const pendingTasks = tasks.filter(task=>task.taskStatus === "pending")
   return (
   <>
-    <div className="add-todo-container  rounded-2xl shadow-lg m-10 bg-gray-200">
+    <div className="add-todo-container  rounded-2xl shadow-lg m-10 bg-gray-100">
     {/* Header Section */}
+
+    <div className="task-header flex justify-between items-center  p-4 ">
+  {[
+    { label: "Task Name" },
+    { 
+      label: "Due On", 
+      icon: <RiExpandUpDownFill className="text-xl text-gray-500" /> 
+    },
+    { label: "Task Status" },
+    { label: "Task Category" },
+  ].map((item, index) => (
+    <h2 key={index} className="text-lg font-semibold flex items-center space-x-2">
+      <span>{item.label}</span>
+      {item.icon && <span>{item.icon}</span>}
+    </h2>
+  ))}
+</div>
+
     <div className="todo-header bg-[#FAC3FF] text-black py-2 rounded-t-2xl flex justify-between items-center px-4">
   {/* Heading */}
   <h2 className="text-xl font-bold">Todo</h2>
@@ -50,9 +74,9 @@ const [showWorkStatus , setShowWorkStatus] = useState(false)
 
 <div className="task-header flex  p-4   justify-between ">
           {/* Task Title */}
-          <div className="task-title  p-4 rounded-lg ">
+ <div className="task-title  p-4 rounded-lg ">
   {/* Task Title */}
-  <h2 className="text-xl text-black mb-2">Task Title</h2>
+ <h2 className="text-xl text-black mb-2">Task Title</h2>
 
   {/* Buttons */}
   <div className="flex space-x-4">
@@ -66,7 +90,7 @@ const [showWorkStatus , setShowWorkStatus] = useState(false)
 
 
 </div>
-          {/* Add Date Button */}
+  {/* Add Date Button */}
           <button className=" flex items-center  justify-center px-1 py-2 text-black rounded-lg border-1 w-28 h-10 mr-28 gap-1 mt-4">
            <span><FaRegCalendarAlt />
            </span>  Add Date
@@ -90,7 +114,7 @@ const [showWorkStatus , setShowWorkStatus] = useState(false)
             )}
             </div>
             {/* Dropdown 2 */}
-        <div className="work">
+              <div className="work">
             <button className="flex items-center px-4 py-2   text-black hover:text-gray-300" 
             onClick={handleWorkStatus}>
             <IoIosAddCircleOutline className='mr-12 w-8 h-8'/>
@@ -106,11 +130,17 @@ const [showWorkStatus , setShowWorkStatus] = useState(false)
         </div>
       )}
       <hr />
-    {/* Content Area */}
+    {/* Content Area   todo ll list this area */}   
     <div className="p-4 h-100">
-      {/* Placeholder for additional content */}
-      <p className="text-gray-600 text-center">Add your tasks here...</p>
+    {pendingTasks.map(task => (
+        <div key={task.id}>
+          <h3>{task.taskTitle}</h3>
+          <p>{task.description}</p>
+        </div>
+      ))}
     </div>
+
+    
   </div>
 
 

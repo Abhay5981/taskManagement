@@ -20,4 +20,4 @@ function ProgressTodo() {
   )
 }
 
-export default ProgressTodo
+export default ProgressTodo;
